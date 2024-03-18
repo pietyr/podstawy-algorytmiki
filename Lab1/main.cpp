@@ -1,5 +1,7 @@
 #include <iostream>
 
+using namespace std;
+
 // Zadanie 1.1 Funkcje typu void
 // Zadanie 1.2 Minimalny element
 // Zadanie 1.3 Zliczanie elementów tablicy
@@ -31,6 +33,21 @@ void wyswietl1D(int* tab, int n);
 void wyswietl2D(int** tab, int w, int k);
 
 int main() {
-	std::cout << "Hello, World!" << std::endl;
+	int menu_selection = -1;
+
+	cout << "Laboratorium 1" << endl;
+
+	while(menu_selection != 5) {
+		cout << "==================== MENU ====================" << endl;
+		cout << "1. Minimalny element (Zadanie 1.2)" << endl;
+		cout << "2. Zliczanie elementów w tablicy (Zadanie 1.3)" << endl;
+		cout << "3. Zliczanie elementów w tablicy (Zadanie 1.4)" << endl;
+		cout << "4. Zliczanie elementów w tablicy (Zadanie 1.5)" << endl;
+		cout << "5. Wyjście z programu" << endl;
+		cout << "==================== MENU ====================" << endl;
+		cout << "Wybierz program (1-5): ";
+		cin >> menu_selection;
+	}
+
 	return 0;
 }
