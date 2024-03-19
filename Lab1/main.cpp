@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdlib>
+#include <time.h>
 
 using namespace std;
 
@@ -18,16 +20,29 @@ void allocateMemory1D(int *&array, int size);
 /**
  * Allocate memory for two dimension array
  * @param array Reference to the array
- * @param size_x Size of the array in first dimension
- * @param size_y Size of the array in second dimension (size of the subarray)
+ * @param sizeX Size of the array in first dimension
+ * @param sizeY Size of the array in second dimension (size of the subarrays)
  */
-void allocateMemory2D(int **&array, int size_x, int size_y);
+void allocateMemory2D(int **&array, int sizeX, int sizeY);
 
-// wypełnienie tablicy jednowymiarowej wygenerowanymi liczbami z zakresu <a,b>
-void wypelnijTablice1D(int *tab, int n, int a, int b);
+/**
+ * Fill the one dimension array with numbers from <a,b> range
+ * @param array Reference to target array
+ * @param size Size of the target array
+ * @param min Lowest fill value (including)
+ * @param max Highest fill value (including)
+ */
+void randomFill1DArray(int *array, int size, int min, int max);
 
-// wypełnienie tablicy dwuwymiarowej wygenerowanymi liczbami z zakresu <a,b>
-void wypelnijTablice2D(int **tab, int w, int k, int a, int b);
+/**
+ * Fill the two dimension array with numbers from <a,b> range
+ * @param array Reference to target array
+ * @param sizeX Size of the array in first dimension
+ * @param sizeY Size of the array in second dimension (size of the subarrays)
+ * @param min Lowest fill value (including)
+ * @param max Highest fill value (including)
+ */
+void randomFill2DArray(int **array, int sizeX, int sizeY, int min, int max);
 
 // zwolnienie pamięci w tablicy jednowymiarowej
 void usunTablice1D(int *&tab);
@@ -66,10 +81,25 @@ void allocateMemory1D(int *&array, int size) {
 	array = new int[size];
 }
 
-void allocateMemory2D(int **&array, int size_x, int size_y) {
-	array = new int*[size_x];
+void allocateMemory2D(int **&array, int sizeX, int sizeY) {
+	array = new int*[sizeX];
 
-	for(int i = 0; i < size_x; i++) {
-		array[i] = new int[size_y];
+	for(int i = 0; i < sizeX; i++) {
+		allocateMemory1D(array[i], sizeY);
+	}
+}
+
+void randomFill1DArray(int *array, int size, int min, int max) {
+	srand(time(nullptr));
+
+	for(int i = 0; i < size; i++) {
+		int randomNumber = rand() % (max - min + 1) + min;
+		array[i] = randomNumber;
+	}
+}
+
+void randomFill2DArray(int **array, int sizeX, int sizeY, int min, int max) {
+	for(int i = 0; i < sizeX; i++) {
+		randomFill1DArray(array[i], sizeY, min, max);
 	}
 }
