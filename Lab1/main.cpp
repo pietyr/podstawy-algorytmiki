@@ -72,6 +72,20 @@ void print1D(int* array, int size);
  */
 void print2D(int** array, int sizeX, int sizeY);
 
+/**
+ * Function read size of the 1D array and <min, max> range to generate random numbers.
+ * Function fills table with random numbers.
+ * Function then prints lowest number in array and checks if that number is prime
+ */
+void minElement();
+
+/**
+ * Returns boolean indicating if number is prime
+ * @param number Checked number
+ * @return True if number is prime
+ */
+bool isPrime(int number);
+
 int main() {
 	int menu_selection = -1;
 
@@ -87,8 +101,19 @@ int main() {
 		cout << "==================== MENU ====================" << endl;
 		cout << "Wybierz program (1-5): ";
 		cin >> menu_selection;
-	}
 
+		switch (menu_selection) {
+		case 1:
+			minElement();
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		}
+	}
 	return 0;
 }
 
@@ -156,4 +181,60 @@ void print2D(int** array, int sizeX, int sizeY) {
 	}
 
 	cout << "]" << endl;
+}
+
+bool isPrime(int number) {
+	if(number == 2 || number == 3) {
+		return true;
+	}
+
+	if(number <= 1 || number % 2 == 0 || number % 3 == 0) {
+		return false;
+	}
+
+	for(int i = 5; i * i <= number; i += 6) {
+		if(number % i == 0 || number % (i + 2) == 0) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void minElement() {
+	/*
+ * Function read size of the 1D array and <min, max> range to generate random numbers.
+ * Function fills table with random numbers.
+ * Function then prints lowest number in array and checks if that number is prime
+ */
+	int size, min, max;
+	int *array;
+
+	cout << "Podaj rozmiar tablicy: ";
+	cin >> size;
+	cout << "Podaj dolny zakres wartości tablicy: ";
+	cin >> min;
+	cout << "Podaj górny zakres wartości tablicy: ";
+	cin >> max;
+
+	allocateMemory1D(array, size);
+	randomFill1DArray(array, size, min, max);
+
+	int lowest = array[0];
+	for(int i = 1; i < size; i++) {
+		if(array[i] < lowest) {
+			lowest = array[i];
+		}
+	}
+
+	bool prime = isPrime(lowest);
+
+	cout << "Najmniejsza wartość tablicy: " << lowest << endl;
+	if(prime) {
+		cout << "Liczba " << lowest << " jest liczbą pierwszą" << endl;
+	}else {
+		cout << "Liczba " << lowest << " nie jest liczbą pierwszą" << endl;
+	}
+
+	deleteArray1D(array);
 }
