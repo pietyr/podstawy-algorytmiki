@@ -8,11 +8,20 @@ using namespace std;
 // Zadanie 1.4 Maksymalny element
 // Zadanie 1.5 Średnia
 
-//przydzielenie pamięci w tablicy  jednowymiarowej, n – rozmiar tablicy
-void przydzielPamiec1D(int *&tab, int n);
+/**
+ * Allocate memory for one dimension array
+ * @param array Reference to the array
+ * @param size Size of the array
+ */
+void allocateMemory1D(int *&array, int size);
 
-// przydzielenie pamięci w tablicy dwuwymiarowej, w, k - wymiary tablicy
-void przydzielPamiec2D(int **&tab, int w, int k);
+/**
+ * Allocate memory for two dimension array
+ * @param array Reference to the array
+ * @param size_x Size of the array in first dimension
+ * @param size_y Size of the array in second dimension (size of the subarray)
+ */
+void allocateMemory2D(int **&array, int size_x, int size_y);
 
 // wypełnienie tablicy jednowymiarowej wygenerowanymi liczbami z zakresu <a,b>
 void wypelnijTablice1D(int *tab, int n, int a, int b);
@@ -50,4 +59,17 @@ int main() {
 	}
 
 	return 0;
+}
+
+
+void allocateMemory1D(int *&array, int size) {
+	array = new int[size];
+}
+
+void allocateMemory2D(int **&array, int size_x, int size_y) {
+	array = new int*[size_x];
+
+	for(int i = 0; i < size_x; i++) {
+		array[i] = new int[size_y];
+	}
 }
