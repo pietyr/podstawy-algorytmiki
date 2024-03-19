@@ -57,11 +57,20 @@ void deleteArray1D(int *&array);
  */
 void deleteArray2D(int **&array, int sizeX);
 
-// wyświetlenie zawartości tablicy jednowymiarowej
-void wyswietl1D(int* tab, int n);
+/**
+ * Print content of the one dimension array
+ * @param array Target array
+ * @param size Size of the array
+ */
+void print1D(int* array, int size);
 
-//wyświetlenie zawartości tablicy dwuwymiarowej
-void wyswietl2D(int** tab, int w, int k);
+/**
+ * Print content of the two dimension array
+ * @param array Target array
+ * @param sizeX Size of the array in first dimension
+ * @param sizeY Size of the array in second dimension (size of the subarrays)
+ */
+void print2D(int** array, int sizeX, int sizeY);
 
 int main() {
 	int menu_selection = -1;
@@ -120,4 +129,31 @@ void deleteArray2D(int **&array, int sizeX) {
 		deleteArray1D(array[i]);
 	}
 	delete []array;
+}
+
+void print1D(int* array, int size) {
+	cout << "[";
+
+	for(int i = 0; i < size; i++) {
+		cout << array[i];
+		if(i < size - 1) {
+			cout << ", ";
+		}
+	}
+
+	cout << "]" << endl;
+}
+
+void print2D(int** array, int sizeX, int sizeY) {
+	cout << "[";
+
+	for(int i = 0; i < sizeX; i++) {
+		cout << "    ";
+		print1D(array[i], sizeY);
+		if(i < sizeX - 1) {
+			cout << ",";
+		}
+	}
+
+	cout << "]" << endl;
 }
