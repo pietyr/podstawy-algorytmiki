@@ -44,11 +44,18 @@ void randomFill1DArray(int *array, int size, int min, int max);
  */
 void randomFill2DArray(int **array, int sizeX, int sizeY, int min, int max);
 
-// zwolnienie pamięci w tablicy jednowymiarowej
-void usunTablice1D(int *&tab);
+/**
+ * Free memory of the one dimension array
+ * @param array Target array
+ */
+void deleteArray1D(int *&array);
 
-// zwolnienie pamięci w tablicy dwuwymiarowe
-void usunTablice2D(int **&tab, int w);
+/**
+ * Free memory of the two dimension array
+ * @param array Target array
+ * @param sizeX Size of the array in first dimension
+ */
+void deleteArray2D(int **&array, int sizeX);
 
 // wyświetlenie zawartości tablicy jednowymiarowej
 void wyswietl1D(int* tab, int n);
@@ -102,4 +109,15 @@ void randomFill2DArray(int **array, int sizeX, int sizeY, int min, int max) {
 	for(int i = 0; i < sizeX; i++) {
 		randomFill1DArray(array[i], sizeY, min, max);
 	}
+}
+
+void deleteArray1D(int *&array) {
+	delete []array;
+}
+
+void deleteArray2D(int **&array, int sizeX) {
+	for(int i = 0; i < sizeX; i++) {
+		deleteArray1D(array[i]);
+	}
+	delete []array;
 }
