@@ -86,6 +86,13 @@ void minElement();
  */
 bool isPrime(int number);
 
+
+/**
+ * Function gets size of the array and fill it with random numbers from <0-9> range
+ * Function prints how many times each value had appeared
+ */
+void countArrayItems();
+
 int main() {
 	int menu_selection = -1;
 
@@ -107,6 +114,7 @@ int main() {
 			minElement();
 			break;
 		case 2:
+			countArrayItems();
 			break;
 		case 3:
 			break;
@@ -237,4 +245,35 @@ void minElement() {
 	}
 
 	deleteArray1D(array);
+}
+
+void countArrayItems(){
+	int size;
+	int min = 0;
+	int max = 9;
+	int *array;
+	int *numbers;
+
+	cout << "Podaj rozmiar tablicy: ";
+	cin >> size;
+
+	allocateMemory1D(array, size);
+	randomFill1DArray(array, size, min, max);
+
+	allocateMemory1D(numbers, 10);
+
+	for(int i = 0; i < 10; i++){
+		numbers[i] = 0;
+ 	}
+
+	for(int i = 0; i < size; i++){
+		numbers[array[i]]++;
+	}
+
+	for(int i = 0; i < 10; i++){
+		cout << "Ilość wystąpień liczby " << i << ": " << numbers[i] << endl;
+	}
+
+	deleteArray1D(array);
+	deleteArray1D(numbers);
 }
