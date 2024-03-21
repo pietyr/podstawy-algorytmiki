@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <time.h>
+#include <cmath>
 
 using namespace std;
 
@@ -93,6 +94,21 @@ bool isPrime(int number);
  */
 void countArrayItems();
 
+/**
+ * Function returns digits sum of a natural number in a given number base
+ * @param number 
+ * @param base
+ * @return 
+ */
+int sumOfDigits(int number, int base);
+
+/**
+ * Function read size of the 2D array and <min, max> range to generate random numbers.
+ * Function fills table with random numbers.
+ * Function then prints highest number in array and sum of its digits
+ */
+void maxElement();
+
 int main() {
 	int menu_selection = -1;
 
@@ -102,8 +118,8 @@ int main() {
 		cout << "==================== MENU ====================" << endl;
 		cout << "1. Minimalny element (Zadanie 1.2)" << endl;
 		cout << "2. Zliczanie elementów w tablicy (Zadanie 1.3)" << endl;
-		cout << "3. Zliczanie elementów w tablicy (Zadanie 1.4)" << endl;
-		cout << "4. Zliczanie elementów w tablicy (Zadanie 1.5)" << endl;
+		cout << "3. Maksymalny element (Zadanie 1.4)" << endl;
+		cout << "4. Średnia (Zadanie 1.5)" << endl;
 		cout << "5. Wyjście z programu" << endl;
 		cout << "==================== MENU ====================" << endl;
 		cout << "Wybierz program (1-5): ";
@@ -117,6 +133,7 @@ int main() {
 			countArrayItems();
 			break;
 		case 3:
+			maxElement();
 			break;
 		case 4:
 			break;
@@ -210,11 +227,6 @@ bool isPrime(int number) {
 }
 
 void minElement() {
-	/*
- * Function read size of the 1D array and <min, max> range to generate random numbers.
- * Function fills table with random numbers.
- * Function then prints lowest number in array and checks if that number is prime
- */
 	int size, min, max;
 	int *array;
 
@@ -276,4 +288,47 @@ void countArrayItems(){
 
 	deleteArray1D(array);
 	deleteArray1D(numbers);
+}
+
+int sumOfDigits(int number, int base){
+	int sum = 0;
+
+	for(int j = number,  i = 0; j >= 1; j /= base, i++){
+		sum += ((number % (int)pow(base, i + 1) - number % (int)pow(base, i)) / (int)pow(base, i));
+	}
+
+	return sum;
+}
+
+void maxElement(){
+	int sizeX, sizeY, min, max;
+	int **array;
+
+	cout << "Podaj rozmiar X tablicy: ";
+	cin >> sizeX;
+	cout << "Podaj rozmiar Y tablicy: ";
+	cin >> sizeY;
+	cout << "Podaj dolny zakres wartości tablicy: ";
+	cin >> min;
+	cout << "Podaj górny zakres wartości tablicy: ";
+	cin >> max;
+
+	allocateMemory2D(array, sizeX, sizeY);
+	randomFill2DArray(array, sizeX, sizeY, min, max);
+
+	int highest = array[0][0];
+	for(int i = 0; i < sizeX; i++) {
+		for(int j = 0; j < sizeY; j++){
+			if(array[i][j] > highest) {
+				highest = array[i][j];
+			}
+		}
+	}
+
+	int sum = sumOfDigits(highest, 10);
+
+	cout << "Największa wartość tablicy: " << highest << endl;
+	cout << "Suma cyfr tej liczby: " << sum << endl;
+
+	deleteArray2D(array, sizeX);
 }
