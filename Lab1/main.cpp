@@ -109,6 +109,15 @@ int sumOfDigits(int number, int base);
  */
 void maxElement();
 
+/**
+ * Function read size of the square 2D array
+ * Function fills table with random numbers from <7; 122> range
+ * Function then calculates:
+ * The average of the elements above the main diagonal
+ * The average of the elements below the main diagonal
+ */
+void average();
+
 int main() {
 	int menu_selection = -1;
 
@@ -136,6 +145,7 @@ int main() {
 			maxElement();
 			break;
 		case 4:
+			average();
 			break;
 		}
 	}
@@ -195,6 +205,7 @@ void print1D(int* array, int size) {
 }
 
 void print2D(int** array, int sizeX, int sizeY) {
+	cout << "===========================================" << endl;
 	cout << "[";
 
 	for(int i = 0; i < sizeX; i++) {
@@ -206,6 +217,7 @@ void print2D(int** array, int sizeX, int sizeY) {
 	}
 
 	cout << "]" << endl;
+	cout << "===========================================" << endl;
 }
 
 bool isPrime(int number) {
@@ -331,4 +343,43 @@ void maxElement(){
 	cout << "Suma cyfr tej liczby: " << sum << endl;
 
 	deleteArray2D(array, sizeX);
+}
+
+void average(){
+	int size;
+	int **array;
+	int min = 7;
+	int max = 122;
+
+	cout << "Podaj rozmiar tablicy: ";
+	cin >> size;
+
+	allocateMemory2D(array, size, size);
+	randomFill2DArray(array, size, size, min, max);
+	print2D(array, size, size);
+
+	int aboveSum = 0;
+	int belowSum = 0;
+	int numberOfElements = (size * size - size) / 2;
+
+	for(int i = 0; i < size; i++){
+		for(int j = 0; j < size; j++){
+			if(j > i){
+				// Above
+				aboveSum += array[i][j];
+			}
+			if(i > j){
+				// Below
+				belowSum += array[i][j];
+			}
+		}
+	}
+
+	float aboveAvg = (float)aboveSum / numberOfElements;
+	float belowAvg = (float)belowSum / numberOfElements;
+
+	deleteArray2D(array, size);
+
+	cout << "Średnia elementów znajdujących się powyżej przekątnej: " << aboveAvg << endl;
+	cout << "Średnia elementów znajdujących się poniżej przekątnej: " << belowAvg << endl;
 }
