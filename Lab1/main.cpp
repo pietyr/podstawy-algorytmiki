@@ -119,6 +119,7 @@ void maxElement();
 void average();
 
 int main() {
+	srand(time(nullptr));
 	int menu_selection = -1;
 
 	cout << "Laboratorium 1" << endl;
@@ -166,7 +167,7 @@ void allocateMemory2D(int **&array, int sizeX, int sizeY) {
 }
 
 void randomFill1DArray(int *array, int size, int min, int max) {
-	srand(time(nullptr));
+
 
 	for(int i = 0; i < size; i++) {
 		int randomNumber = rand() % (max - min + 1) + min;
