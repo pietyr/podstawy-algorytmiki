@@ -2,6 +2,16 @@
 
 using namespace std;
 
+
+// SORTING ALGORITHMS
+
+/**
+ * Function swaps 2 integers
+ * @param a
+ * @param b
+ */
+void swap(int *a, int *b);
+
 /**
  * Function sorts 1D array ascending/descending (depending on the mode),
  * using bubble sort algorithm
@@ -41,6 +51,13 @@ void insertSort(int *array, int size, int mode = 0);
  */
 void bubbleSort2D(int **array, int sizeX, int sizeY, int column, int mode = 0);
 
+
+// EXERCISES WRAPPER FUNCTIONS
+
+void zadanie2();
+
+// UTILITY FUNCTIONS FROM Lab1
+
 /**
  * Allocate memory for one dimension array
  * @param array Reference to the array
@@ -74,8 +91,20 @@ int main(){
 	return 0;
 }
 
+void swap(int *a, int *b) {
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
 void bubbleSort(int *array, int size, int mode){
-	cout << "test";
+
+}
+
+void zadanie2() {
+	int size;
+	cout << "Sortowanie bąbelkowe" << endl;
+	cout << "Podaj rozmiar tablicy: ";
 }
 
 void allocateMemory1D(int *&array, int size) {
