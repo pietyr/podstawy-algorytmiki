@@ -38,7 +38,7 @@ void selectionSort(int *&array, int size, int mode = 0);
  * @param size size of the array
  * @param mode 0 (default) - ascending, 1 - descending
  */
-void insertSort(int *array, int size, int mode = 0);
+void insertSort(int *&array, int size, int mode = 0);
 
 /**
  * Function sorts 2D array[X][Y] ascending/descending (depending on the mode),
@@ -57,6 +57,7 @@ void bubbleSort2D(int **array, int sizeX, int sizeY, int column, int mode = 0);
 
 void zadanie2();
 void zadanie3();
+void zadanie4();
 
 // UTILITY FUNCTIONS FROM Lab1
 
@@ -96,6 +97,7 @@ int main(){
 		cout << "Lab 2" << endl;
 		cout << "1. Zadanie 2.2 - Sortowanie bąbelkowe" << endl;
 		cout << "2. Zadanie 2.3 - Sortowanie przez wybór" << endl;
+		cout << "3. Zadanie 2.4 - Sortowanie przez wstawienie" << endl;
 		cout << "5. Koniec programu" << endl;
 		cout << "Podaj wybór: " << endl;
 		cin >> selection;
@@ -104,6 +106,9 @@ int main(){
 		}
 		if(selection == 2) {
 			zadanie3();
+		}
+		if(selection == 3) {
+			zadanie4();
 		}
 	}while(selection != 5);
 	return 0;
@@ -134,6 +139,18 @@ void selectionSort(int *&array, int size, int mode) {
 			}
 		}
 		swap(array[i], array[minElementIndex]);
+	}
+}
+
+void insertSort(int *&array, int size, int mode) {
+	for(int i = 1; i < size; i++) {
+		int currentValue = array[i];
+		int j = i;
+		while(j > 0 && (mode == 0 && array[j - 1] > currentValue || mode != 0 && array[j - 1] < currentValue)) {
+			array[j] = array[j - 1];
+			j--;
+		}
+		array[j] = currentValue;
 	}
 }
 
@@ -182,6 +199,31 @@ void zadanie3() {
 	print1D(array, size);
 	cout << "Tablica po posortowaniu: " << endl;
 	selectionSort(array, size, mode);
+	print1D(array, size);
+
+	deleteArray1D(array);
+}
+
+void zadanie4() {
+	int size, min, max, mode;
+	int *array = nullptr;
+	cout << "Sortowanie przez wstawienie" << endl;
+	cout << "Podaj rozmiar tablicy: ";
+	cin >> size;
+	cout << "Podaj dolny zakres możliwych wartości, którymi wypełnić tablicę: ";
+	cin >> min;
+	cout << "Podaj górny zakres możliwych wartości, którymi wypełnić tablicę: ";
+	cin >> max;
+	cout << "Wybierz kolejność sortowania. Wpisz 0 dla sortowania rosnącego lub dowolną inną liczbę dla sortowania malejącego" << endl;
+	cin >> mode;
+
+	allocateMemory1D(array, size);
+	randomFill1DArray(array, size, min, max);
+
+	cout << "Tablica przed posortowaniem: " << endl;
+	print1D(array, size);
+	cout << "Tablica po posortowaniu: " << endl;
+	insertSort(array, size, mode);
 	print1D(array, size);
 
 	deleteArray1D(array);
