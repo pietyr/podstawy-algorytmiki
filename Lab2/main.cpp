@@ -90,6 +90,39 @@ void deleteArray1D(int *&array);
  */
 void print1D(int *&array, int size);
 
+/**
+ * Allocate memory for two dimension array
+ * @param array Reference to the array
+ * @param sizeX Size of the array in first dimension
+ * @param sizeY Size of the array in second dimension (size of the subarrays)
+ */
+void allocateMemory2D(int **&array, int sizeX, int sizeY);
+
+/**
+ * Fill the two dimension array with numbers from <a,b> range
+ * @param array Reference to target array
+ * @param sizeX Size of the array in first dimension
+ * @param sizeY Size of the array in second dimension (size of the subarrays)
+ * @param min Lowest fill value (including)
+ * @param max Highest fill value (including)
+ */
+void randomFill2DArray(int **&array, int sizeX, int sizeY, int min, int max);
+
+/**
+ * Free memory of the two dimension array
+ * @param array Target array
+ * @param sizeX Size of the array in first dimension
+ */
+void deleteArray2D(int **&array, int sizeX);
+
+/**
+ * Print content of the two dimension array
+ * @param array Target array
+ * @param sizeX Size of the array in first dimension
+ * @param sizeY Size of the array in second dimension (size of the subarrays)
+ */
+void print2D(int **&array, int sizeX, int sizeY);
+
 int main(){
 	srand(time(nullptr));
 	int selection;
@@ -255,4 +288,41 @@ void print1D(int *&array, int size) {
 	}
 
 	cout << "]" << endl;
+}
+
+void allocateMemory2D(int **&array, int sizeX, int sizeY) {
+	array = new int*[sizeX];
+
+	for(int i = 0; i < sizeX; i++) {
+		allocateMemory1D(array[i], sizeY);
+	}
+}
+
+void randomFill2DArray(int **&array, int sizeX, int sizeY, int min, int max) {
+	for(int i = 0; i < sizeX; i++) {
+		randomFill1DArray(array[i], sizeY, min, max);
+	}
+}
+
+void deleteArray2D(int **&array, int sizeX) {
+	for(int i = 0; i < sizeX; i++) {
+		deleteArray1D(array[i]);
+	}
+	delete []array;
+}
+
+void print2D(int **&array, int sizeX, int sizeY) {
+	cout << "===========================================" << endl;
+	cout << "[";
+
+	for(int i = 0; i < sizeX; i++) {
+		cout << "    ";
+		print1D(array[i], sizeY);
+		if(i < sizeX - 1) {
+			cout << ",";
+		}
+	}
+
+	cout << "]" << endl;
+	cout << "===========================================" << endl;
 }
