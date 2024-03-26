@@ -50,7 +50,7 @@ void insertSort(int *&array, int size, int mode = 0);
  * @param mode 0 (default) - ascending, 1 - descending
  * @param column index of column (array [][column])
  */
-void bubbleSort2D(int **array, int sizeX, int sizeY, int column, int mode = 0);
+void bubbleSort2D(int **&array, int sizeX, int sizeY, int column, int mode = 0);
 
 
 // EXERCISES WRAPPER FUNCTIONS
@@ -58,6 +58,7 @@ void bubbleSort2D(int **array, int sizeX, int sizeY, int column, int mode = 0);
 void zadanie2();
 void zadanie3();
 void zadanie4();
+void zadanie5();
 
 // UTILITY FUNCTIONS FROM Lab1
 
@@ -131,6 +132,7 @@ int main(){
 		cout << "1. Zadanie 2.2 - Sortowanie bąbelkowe" << endl;
 		cout << "2. Zadanie 2.3 - Sortowanie przez wybór" << endl;
 		cout << "3. Zadanie 2.4 - Sortowanie przez wstawienie" << endl;
+		cout << "4. Zadanie 2.5 - Sortowanie bąbelkowe tablicy dwuwymiarowej" << endl;
 		cout << "5. Koniec programu" << endl;
 		cout << "Podaj wybór: " << endl;
 		cin >> selection;
@@ -143,6 +145,9 @@ int main(){
 		if(selection == 3) {
 			zadanie4();
 		}
+		if(selection == 4) {
+			zadanie5();
+		}
 	}while(selection != 5);
 	return 0;
 }
@@ -151,6 +156,12 @@ void swap(int &a, int &b) {
 	int temp = a;
 	a = b;
 	b = temp;
+}
+
+void swapRows(int **&array, int rowIndexA, int rowIndexB) {
+	int *temp = array[rowIndexA];
+	array[rowIndexA] = array[rowIndexB];
+	array[rowIndexB] = temp;
 }
 
 void bubbleSort(int *&array, int size, int mode){
@@ -184,6 +195,17 @@ void insertSort(int *&array, int size, int mode) {
 			j--;
 		}
 		array[j] = currentValue;
+	}
+}
+
+void bubbleSort2D(int **&array, int sizeX, int sizeY, int column, int mode) {
+	for(int i = sizeX - 1; i > 0; i--) {
+		for(int j = 0; j < i; j++) {
+			if(mode == 0 && array[j][column] > array[j + 1][column] || mode != 0 && array[j][column] < array[j + 1][column]) {
+				// swap(array[j], array[j + 1]);
+				swapRows(array, j, j + 1);
+			}
+		}
 	}
 }
 
@@ -260,6 +282,35 @@ void zadanie4() {
 	print1D(array, size);
 
 	deleteArray1D(array);
+}
+
+void zadanie5() {
+	int sizeX, sizeY, min, max, mode, column;
+	int **array = nullptr;
+	cout << "Sortowanie przez wstawienie" << endl;
+	cout << "Podaj liczbę wierszy tablicy: ";
+	cin >> sizeX;
+	cout << "Podaj liczbę kolumn tablicy: ";
+	cin >> sizeY;
+	cout << "Podaj dolny zakres możliwych wartości, którymi wypełnić tablicę: ";
+	cin >> min;
+	cout << "Podaj górny zakres możliwych wartości, którymi wypełnić tablicę: ";
+	cin >> max;
+	cout << "Wybierz kolejność sortowania. Wpisz 0 dla sortowania rosnącego lub dowolną inną liczbę dla sortowania malejącego" << endl;
+	cin >> mode;
+	cout << "Podaj numer kolumny względem, której sortować: " << endl;
+	cin >> column;
+
+	allocateMemory2D(array, sizeX, sizeY);
+	randomFill2DArray(array, sizeX, sizeY, min, max);
+
+	cout << "Tablica przed posortowaniem: " << endl;
+	print2D(array, sizeX, sizeY);
+	cout << "Tablica po posortowaniu: " << endl;
+	bubbleSort2D(array, sizeX, sizeY, column, mode);
+	print2D(array, sizeX, sizeY);
+
+	deleteArray2D(array, sizeX);
 }
 
 void allocateMemory1D(int *&array, int size) {
