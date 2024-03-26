@@ -118,7 +118,7 @@ void swap(int &a, int &b) {
 void bubbleSort(int *&array, int size, int mode){
 	for(int i = size - 1; i > 0; i--) {
 		for(int j = 0; j < i; j++) {
-			if(array[j] > array[j + 1]) {
+			if(mode == 0 && array[j] > array[j + 1] || mode != 0 && array[j] < array[j + 1]) {
 				swap(array[j], array[j + 1]);
 			}
 		}
@@ -138,7 +138,7 @@ void selectionSort(int *&array, int size, int mode) {
 }
 
 void zadanie2() {
-	int size, min, max;
+	int size, min, max, mode;
 	int *array = nullptr;
 	cout << "Sortowanie bąbelkowe" << endl;
 	cout << "Podaj rozmiar tablicy: ";
@@ -147,6 +147,8 @@ void zadanie2() {
 	cin >> min;
 	cout << "Podaj górny zakres możliwych wartości, którymi wypełnić tablicę: ";
 	cin >> max;
+	cout << "Wybierz kolejność sortowania. Wpisz 0 dla sortowania rosnącego lub dowolną inną liczbę dla sortowania malejącego" << endl;
+	cin >> mode;
 
 	allocateMemory1D(array, size);
 	randomFill1DArray(array, size, min, max);
@@ -154,7 +156,7 @@ void zadanie2() {
 	cout << "Tablica przed posortowaniem: " << endl;
 	print1D(array, size);
 	cout << "Tablica po posortowaniu: " << endl;
-	bubbleSort(array, size, 0);
+	bubbleSort(array, size, mode);
 	print1D(array, size);
 
 	deleteArray1D(array);
