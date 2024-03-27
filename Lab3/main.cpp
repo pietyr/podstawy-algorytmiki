@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -21,7 +23,7 @@ void quickSort(student *&array, int size, int mode);
  * @param array
  * @param size
  */
-void loadStudents(student *&array, int size);
+void loadStudents(student *&array, int *size);
 
 /**
  * Delete array from memory
@@ -38,4 +40,28 @@ void printStudents(student *&array, int size);
 
 int main() {
 	return 0;
+}
+
+void loadStudents(student *&array, int *size) {
+	string line;
+	ifstream file;
+	char semicolons;
+	string src = "../students.csv";
+
+	file.open(src);
+	file >> *size;
+
+	for(int i = 0; i < *size; i++) {
+		file >> line;
+		istringstream ss(line);
+		getline(ss, array[i].firstName, ';');
+		getline(ss, array[i].lastName, ';');
+
+		string scoreString;
+		getline(ss, scoreString);
+
+		// Conversion from string to int
+		array[i].score = stoi(scoreString);
+	}
+	file.close();
 }
