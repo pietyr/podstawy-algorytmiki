@@ -3,11 +3,13 @@
 using namespace std;
 
 struct student {
-
+	string firstName;
+	string lastName;
+	int score;
 };
 
 /**
- * Function sorts array of students (by points) with quick sort algorithm
+ * Function sorts array of students (by score) with quick sort algorithm
  * @param array
  * @param size
  * @param mode 0 - ascending sorting, other number - descending sorting
