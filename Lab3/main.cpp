@@ -58,6 +58,8 @@ int main() {
 	printStudents(array, size);
 	quickSort(array, size, 0, 0, *size - 1);
 	printStudents(array, size);
+	quickSort(array, size, 1, 0, *size - 1);
+	printStudents(array, size);
 	delete size;
 	return 0;
 }
@@ -75,7 +77,7 @@ int partition(student *&array, int *size, int mode, int low, int high) {
 	// Compare every element of the array with pivot
 	for(int i = low; i < high; i++) {
 		// Swap if element is smaller than pivot
-		if(array[i].score <= pivot) {
+		if(mode == 0 && array[i].score <= pivot || mode != 0 && array[i].score >= pivot) {
 			swap(array[++index], array[i]);
 		}
 	}
