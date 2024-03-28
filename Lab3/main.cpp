@@ -36,9 +36,14 @@ void deleteStudentsArray(student *&array);
  * @param array
  * @param size
  */
-void printStudents(student *&array, int size);
+void printStudents(student *&array, int *size);
 
 int main() {
+	student *array = nullptr;
+	int *size = new int;
+	loadStudents(array, size);
+	printStudents(array, size);
+	delete size;
 	return 0;
 }
 
@@ -46,10 +51,15 @@ void loadStudents(student *&array, int *size) {
 	string line;
 	ifstream file;
 	char semicolons;
-	string src = "../students.csv";
+	string src = "students.csv";
 
 	file.open(src);
 	file >> *size;
+	array = new student[*size];
+
+	for (int i = 0; i < 2; i++) {
+		file >> semicolons;
+	}
 
 	for(int i = 0; i < *size; i++) {
 		file >> line;
@@ -64,4 +74,18 @@ void loadStudents(student *&array, int *size) {
 		array[i].score = stoi(scoreString);
 	}
 	file.close();
+}
+
+
+void printStudents(student *&array, int *size) {
+	cout << "Imię Nazwisko - Liczba punktów" << endl;
+	cout << "[" << endl;
+	for(int i = 0; i < *size; i++) {
+		cout << "\t" << array[i].firstName << " " << array[i].lastName << " - " << array[i].score;
+		if(i != *size - 1) {
+			cout << ",";
+		}
+		cout << endl;
+	}
+	cout << "]" << endl;
 }
