@@ -10,9 +10,9 @@ struct slNode{
 };
 
 struct singlyLinkedList {
-    slNode *head;
-    slNode *tail;
-    int size;
+    slNode *head = nullptr;
+    slNode *tail = nullptr;
+    int size = 0;
 };
 
 /**
@@ -64,6 +64,85 @@ void slDeleteAt(singlyLinkedList &list, int index);
 void slPrint(singlyLinkedList &list);
 
 int main() {
+	singlyLinkedList *slList = new singlyLinkedList;
+	slPrint(*slList);
+	slAddHead(*slList, 0);
+	slPrint(*slList);
+	slAddTail(*slList, 1);
+	slPrint(*slList);
+	slAddHead(*slList, 2);
+	slPrint(*slList);
+	slAddHead(*slList, 3);
+	slPrint(*slList);
+	slAddTail(*slList, 4);
+	slPrint(*slList);
 
+	slInsert(*slList, 5, 1);
+	slPrint(*slList);
+	slInsert(*slList, 6, 10);
+	slPrint(*slList);
+	slInsert(*slList, 7, 0);
+	slPrint(*slList);
+	delete slList;
     return 0;
+}
+
+void slAddTail(singlyLinkedList &list, int value) {
+	slNode *node = new slNode;
+	node->value = value;
+	node->next = nullptr;
+	if(list.tail != nullptr) {
+		list.tail->next = node;
+	}else {
+		list.head = node;
+	}
+	list.tail = node;
+	list.size++;
+}
+
+void slAddHead(singlyLinkedList &list, int value) {
+	slNode *node = new slNode;
+	node->value = value;
+	node->next = list.head;
+	list.head = node;
+	if(list.tail == nullptr) {
+		list.tail = node;
+	}
+	list.size++;
+}
+
+void slInsert(singlyLinkedList &list, int value, int index) {
+	if(index == 0) {
+		slAddHead(list, value);
+	}else if(index >= list.size) {
+		slAddTail(list, value);
+	}else {
+		slNode *node = new slNode;
+		node->value = value;
+
+		slNode *temp = list.head;
+		for(int i = 0; i < index - 1; i++) {
+			temp = temp->next;
+		}
+		node->next = temp->next;
+		temp->next = node;
+		list.size++;
+	}
+}
+
+
+void slPrint(singlyLinkedList &list) {
+	cout << "[";
+	if(list.head != nullptr) {
+		slNode *temp = list.head;
+		for(int i = 0; i < list.size; i++) {
+			cout << temp->value;
+			if(i != list.size - 1) {
+				cout << ", ";
+			}
+			temp = temp->next;
+		}
+	}
+
+	cout << "]" << endl;
 }
