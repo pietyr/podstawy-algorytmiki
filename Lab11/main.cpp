@@ -83,6 +83,14 @@ int main() {
 	slPrint(*slList);
 	slInsert(*slList, 7, 0);
 	slPrint(*slList);
+
+	slDeleteHead(*slList);
+	slPrint(*slList);
+	slDeleteTail(*slList);
+	slPrint(*slList);
+	slDeleteAt(*slList, 2);
+	slPrint(*slList);
+
 	delete slList;
     return 0;
 }
@@ -129,6 +137,54 @@ void slInsert(singlyLinkedList &list, int value, int index) {
 		list.size++;
 	}
 }
+
+void slDeleteTail(singlyLinkedList &list) {
+	if(list.size > 0) {
+		slNode *oldTail = list.tail;
+		if(list.size == 1) {
+			list.tail = nullptr;
+			list.head = nullptr;
+			list.size = 0;
+		}else {
+			slNode *temp = list.head;
+			for(int i = 0; i < list.size - 1; i++) {
+				temp = temp->next;
+			}
+			list.tail=temp;
+			list.tail->next = nullptr;
+		}
+		delete oldTail;
+		list.size--;
+	}
+}
+
+void slDeleteHead(singlyLinkedList &list) {
+	if(list.size > 0) {
+		slNode *temp = list.head;
+		list.head = list.head->next;
+		if(list.size == 1) {
+			list.tail = nullptr;
+		}
+		delete temp;
+		list.size--;
+	}
+}
+
+void slDeleteAt(singlyLinkedList &list, int index) {
+	if(index == 0) {
+		slDeleteHead(list);
+	}else if(index > 0 && list.size > 0 && index < list.size) {
+		slNode *previous = list.head;
+		for(int i = 0; i < index - 1; i++) {
+			previous = previous->next;
+		}
+		slNode *temp = previous->next;
+		previous->next = temp->next;
+		delete temp;
+		list.size--;
+	}
+}
+
 
 
 void slPrint(singlyLinkedList &list) {
